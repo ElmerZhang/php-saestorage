@@ -236,13 +236,15 @@ class CF_Http
                 );
 	    $path[] = $host;
         }
-	$path[] = "v1.0";
+        $path[] = "v1.0";
         $url = implode("/", $path);
 
         $curl_ch = curl_init();
         if (!is_null($this->cabundle_path)) {
             curl_setopt($curl_ch, CURLOPT_SSL_VERIFYPEER, True);
             curl_setopt($curl_ch, CURLOPT_CAINFO, $this->cabundle_path);
+        } else {
+            curl_setopt($curl_ch, CURLOPT_SSL_VERIFYPEER, False);
         }
         curl_setopt($curl_ch, CURLOPT_VERBOSE, $this->dbug);
         curl_setopt($curl_ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -1349,8 +1351,9 @@ class CF_Http
         if (!is_null($this->cabundle_path)) {
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, True);
             curl_setopt($ch, CURLOPT_CAINFO, $this->cabundle_path);
+        } else {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, False);
         }
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, True);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_MAXREDIRS, 4);
